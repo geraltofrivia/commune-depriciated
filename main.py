@@ -42,6 +42,7 @@ class MainPage(Handler):
 		message = self.request.get("msg")
 		print message
 		token = self.request.get("token")
+		#print token
 		channel.send_message(token,message)
 
 application = webapp2.WSGIApplication([ ('/',MainPage), 

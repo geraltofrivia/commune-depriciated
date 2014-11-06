@@ -15,7 +15,6 @@
 			console.log("Message arrived= " + message.data);
 			console.log('message');
 			document.getElementById('echo').innerHTML = message.data
-			sendMessage(textfield.message.data)
 		}
 	  channel = new goog.appengine.Channel(token);
 	  console.log(token)
@@ -23,6 +22,10 @@
 	  socket.onmessage = onMessage;
   
     sendMessage = function(message, opt_param) {
+		  if (message == '') {
+		  	console.log("Empty message")
+		  	message = ' '
+		  }
 		  var params = "msg=" + message + "&token=" + token;
 		  var xhr = new XMLHttpRequest();
 		  xhr.open('POST','/', true);
@@ -30,7 +33,7 @@
 		  xhr.send(params);
 		};
 
-		function send(element) {
+		function sender(element) {
 			var textfield = document.getElementById(element)
 			document.getElementById('mirror').innerHTML = textfield.value
 			sendMessage(textfield.value)
@@ -38,7 +41,7 @@
 	</script>
 
 	<div id='tokenprint'> </div>
-	<textarea id = "input" name = "input" onkeyup="send('input')" >  </textarea>
+	<textarea id = "input" name = "input" onkeyup="sender('input')" >  </textarea>
 	<br>From client:	<div id = "mirror"> </div>
 	<br>
 	<br>
