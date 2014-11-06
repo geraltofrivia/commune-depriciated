@@ -3,8 +3,9 @@ import os
 import jinja2
 from google.appengine.api import channel
 from google.appengine.api import users
+from google.appengine.ext import ndb 		#Importing the datastore API
 
-#														_ T E M P L A T E S _ I N I T _
+
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),autoescape = True)
 
@@ -18,6 +19,10 @@ class Handler(webapp2.RequestHandler):
 
 	def render(self, template, **kw):
 		self.write(self.render_str(template, **kw))
+
+#Initializing a database  
+class User(ndb.Model):
+	client_token=ndb.StringProperty()#stores the token id of the client 
 
 
 class MainPage(Handler):
@@ -38,12 +43,20 @@ class MainPage(Handler):
 		self.render('index.html', token = token)
 		channel.send_message(token,"hola")
 
+		#Adding the client token id to the database
+		entry = User(client_token=str(token))
+		entry.put() 
+
 	def post(self):	
 		message = self.request.get("msg")
 		print message
 		token = self.request.get("token")
 		#print token
-		channel.send_message(token,message)
+		#now I will browse through all the client token id and will send to all the other clients and simple query
+		token_id=ndb.gql("SELECT client_token FROM User")
+		for client_token in token_id:
+			print "sent to client :- " + str(client_token.client_token) + " message:- " + message 
+			channel.send_message(str(client_token.client_token),message)
 
 application = webapp2.WSGIApplication([ ('/',MainPage), 
 																			], debug =True)
