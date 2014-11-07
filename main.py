@@ -1,42 +1,47 @@
-import webapp2
-import os
-import jinja2
-from google.appengine.api import channel
-from google.appengine.api import users
+from bottle import request, Bottle, abort, template
+from bottle import SimpleTemplate
+app = Bottle()
+index_bottle=''' 
+<!DOCTYPE html>
+<html>
+<head>
+<h1>HI</h1>
+  <script type="text/javascript">
+    var ws = new WebSocket("ws://example.com:8080/websocket");
+    ws.onopen = function() {
+        ws.send("Hello, world");
+    };
+    ws.onmessage = function (evt) {
+        alert(evt.data);
+    };
+  </script>
+</head>
+<body>
+<p>"hello world"</p>
+</body>
+</html>
 
-template_dir = os.path.join(os.path.dirname(__file__),'templates')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),autoescape = True)
-class Handler(webapp2.RequestHandler):
-	def write(self, *a, **kw):
-		self.response.write(*a,**kw)
+'''
 
-	def render_str(self, template, **params):
-		t = jinja_env.get_template(template)
-		return t.render(params)
+@app.route('/')
+def handle_websocket():
+    #template = SimpleTemplate('index_bottle.html')
+    #tpl.render("index_bottle.html")
+    return template("index_bottle")
+    wsock = request.environ.get('wsgi.websocket')
+    if not wsock:
+        abort(400, 'Expected WebSocket request.')
 
-	def render(self, template, **kw):
-		self.write(self.render_str(template, **kw))
+    while True:
+        try:
+            message = wsock.receive()
+            wsock.send("Your message was: %r" % message)
+        except WebSocketError:
+            break
 
-
-
-class MainPage(Handler):
-	def get(self):
-		self.render('index.html')
-
-class Receive(Handler):
-	def get(self):
-		self.render('common.html')
-
-	def post(self):
-		message = self.request.get("val")
-		print "client:\t",message 
-		self.request.headers['Content-Type'] = 'text/event-stream'
-		self.request.headers['Cache-Control'] = 'no-cache'
-		self.write(message)
-
-
-
-application = webapp2.WSGIApplication([ ('/',MainPage), 
-																				('/recv',Receive)
-
-																			], debug =True)
+from gevent.pywsgi import WSGIServer
+from geventwebsocket import WebSocketError
+from geventwebsocket.handler import WebSocketHandler
+server = WSGIServer(("0.0.0.0", 8080), app,
+                    handler_class=WebSocketHandler)
+server.serve_forever()
