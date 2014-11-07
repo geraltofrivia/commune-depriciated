@@ -51,7 +51,6 @@ class MainPage(Handler):
 		message = self.request.get("msg")
 		print message
 		token = self.request.get("token")
-		#print token
 		#now I will browse through all the client token id and will send to all the other clients and simple query
 		token_id=ndb.gql("SELECT client_token FROM User")
 		for client_token in token_id:
