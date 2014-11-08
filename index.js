@@ -49,9 +49,8 @@ io.on('connection',function(socket) {
         usernames[username] = username;
         ++numUsers;
         addedUser = true;
-        socket.emit('login', { 
-            numUsers: numUsers
-        });
+        socket.emit('login', {
+            
         // echo globally (all clients) that a person has connected
         socket.broadcast.emit('user joined', {
             username: socket.username,

@@ -56,6 +56,18 @@
                         socket.emit('add user', username);
                     }
                 }
+                
+                $loginPage.keydown(function (event) {
+                    connected=true
+                    console.log('keydown')
+                    // Auto-focus the current input when a key is typed
+            
+                    if (event.which === 13 && username==null) {
+                        // When the client hits ENTER on their keyboard
+                            setUsername();
+                    }
+                });
+                
 
                 //User div management
                 socket.on('user joined',function (data) {
@@ -76,17 +88,7 @@
                     $('#'+data.username).html(data.message);
                 });
                     
-                $loginPage.keydown(function (event) {
-                    connected=true
-                    console.log('keydown')
-                    // Auto-focus the current input when a key is typed
-            
-                    if (event.which === 13 && username==null) {
-                        // When the client hits ENTER on their keyboard
-                            setUsername();
-                    }
-                });
-                
+        
                $inputMessage.keydown(function (event) {
                     // Auto-focus the current input when a key is typed
                     if (username) {
