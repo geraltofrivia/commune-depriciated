@@ -9,7 +9,7 @@
     <body>
         <div class="chatpage">
             <div class="chatArea">
-                <ul class="users"></ul>
+                <div class="users"></div>
             </div>
             <br>
             <br>
@@ -57,11 +57,16 @@
                     }
                 }
 
+                //User div management
                 socket.on('user joined',function (data) {
                     console.log(data.username + ' joined');
-                    append_command = "<li> <div id='"+data.username+"' class='userDiv' > user </div>";
+                    append_command = "<div id='"+data.username+"' class='userDiv' > user "+data.username+"</div>";
                     console.log(append_command)
                     $users.append(append_command)
+                });
+                socket.on('user left',function (data) {
+                    console.log(data.username + 'left');
+                    $('#'+data.username).remove();
                 });
 
                 $loginPage.keydown(function (event) {
