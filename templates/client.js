@@ -65,7 +65,17 @@
      });
 
      socket.on('login',function(data){
-         console.log("usernameList"+data.usernames) 
+         console.log("usernameList"+data.usernames)
+         var userList=data.usernames.split(",")
+         for (var i=0;i<userList.length;i++)
+         {
+            append_command = "<div id='"+userList[i]+"' class='userDiv' > user "+userList[i]+"</div>";
+            console.log(append_command)
+            $users.append(append_command)
+         }
+
+         
+         
      });
 
 
