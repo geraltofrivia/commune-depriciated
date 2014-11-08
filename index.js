@@ -10,7 +10,10 @@ var numUsers = 0;
     
     
 app.get('/', function(req, res){ 
- res.sendFile(__dirname+'/templates/index.html');
+    res.sendFile(__dirname+'/templates/index.html');
+});
+app.get('/templates/client.js',function(req, res) {
+    res.sendFile(__dirname+'/templates/client.js');
 });
 
 io.on('connection',function(socket) {
