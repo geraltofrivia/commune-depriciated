@@ -72,7 +72,9 @@
      $inputMessage.keydown(function (event) {
          // Auto-focus the current input when a key is typed
          if (username) {
-             sendMessage();
+             var message = $inputMessage.val();
+             $('#'+username).html(message)
+             sendMessage(message);
              typing = false;
          } 
          if (event.which === 13 ) {
@@ -82,8 +84,7 @@
      });
 
 
-     function sendMessage () {
-         var message = $inputMessage.val();
+     function sendMessage (message) {
          // if there is a non-empty message and a socket connection
          //console.log(message)
          console.log(connected)
