@@ -1,38 +1,86 @@
 <!doctype html>
 <html>
 	<head>
+        <meta charset="UTF-8">
 		<title> Socket.IO chat</title>
-		<style>
-			* { margin: 0; padding: 0; box-sizing: border-box; }
-			body { font: 13px Helvetica, Arial; }
-			form { background: #000; padding:3px; position: fixed; bottom: 0%; width: 100%; }
-			form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; font: 16px Courier;}
-	    form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-	    #messages { list-style-type: none; margin: 0; padding: 0; }
-	    #messages li { padding: 5px 10px; }
-	    #messages li:nth-child(odd) { background: #eee; }
-    </style>
-  </head>
+        <link rel="stylesheet" href="style.css">
+	</head>
     
-  <body>
-      <ul id="messages" autoscroll="True"> </ul>
-      <form action = "">
-          <input id= "m" autocomplete="off" /><button>Send</button>
-      </form>
-      
-      <script src="/socket.io/socket.io.js"></script>
-      <script scr="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-      <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-      <script>  
-          var socket = io(); 
-          $('form').submit(function() {
-              socket.emit('chat message', $('#m').val());
-              $('#m').val('');
-              return false; 
-          });
-          socket.on('chat message', function(msg) {
-              $('#messages').append($('<li>').text(msg));
-          });
-      </script>
+    <body>
+        <div class="chatpage">
+            <div class="chatArea">
+                <ul class="users"></ul>
+            </div>    
+            <input class="inputMessage" placeholder="Type here..."/>
+        </div>
+        <div class="login">
+            <h3 class="title"> What's your nickname? </h3>
+            <input class="usernameInput" type="text" maxlength="14" />
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script type="text/javascript" >
+            console.log("holla at cha?")
+    $(document).ready( function(){
+    //Vars of DOM    
+    var $window = $(window);    //Variable of whole window
+    var $usernameInput = $('.usernameInput');       //Var for the user's name @ login
+    var $users = $('.users');        //Var for the list of users's div
+    var $inputMessage = $('.inputMessage');     //Var for the user's input
+    var $loginPage = $('.login');       //Var for the whole login page
+    var $chatPage = $('.chatpage');     //Var for the actual chat area
+
+    //Vars for misc manipulation
+    var username;
+    var connected = false;
+    var FADE_TIME = 150;
+    var $currentInput = $usernameInput.focus();
+    
+    //Init the socket.io
+    var socket = io();
+    
+    //Function used to typescaping the input
+    function clean_input(input) {
+        return text(input);
+    }
+        
+
+    function setUsername() {
+        username = clean_input($usernameInput.val().trim());
+        console.log("username is :")
+        console.log(username)
+        if (username) {
+            $loginPage.fadeOut();
+            $chatPage.show();
+            $loginPage.off('click');
+            $currentInput = $inputMessage.focus();
+            socket.emit('add user', username);
+        }
+    }
+    
+    socket.on('user joined',function (data) {
+        console.log(data.username + ' joined');+
+        $users.append('<li> <div id="%s" class="userDiv" > user </div>', data.username)
+    });
+    
+    $loginPage.keydown(function (event) {
+        console.log('keydown')
+        // Auto-focus the current input when a key is typed
+        if (event.which === 13) {
+            // When the client hits ENTER on their keyboard
+            console.log("in key down event")
+            if (username) {
+                sendMessage();
+                socket.emit('stop typing');
+                typing = false;
+            } 
+            else {
+                setUsername();
+            }
+        }
+    });
+    
+});
+        </script>
     </body>
 </html>
