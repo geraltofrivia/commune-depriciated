@@ -19,7 +19,7 @@ io.on('connection',function(socket) {
     
     //This handler will be called everytime a key is pressed
     socket.on('new message',function(msg) {
-        console.log('message: '+ msg);
+        console.log('from: ' +socket.username +'message: '+ msg);
         socket.broadcast.emit('new message', {
             username: socket.username,
             message: msg

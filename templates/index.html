@@ -69,21 +69,51 @@
                     $('#'+data.username).remove();
                 });
 
+                
+                //User msg management
+                socket.on('new message',function (data) {
+                    console.log(data.username + data.message);
+                    $('#'+data.username).html(data.message);
+                });
+                    
                 $loginPage.keydown(function (event) {
+                    connected=true
                     console.log('keydown')
                     // Auto-focus the current input when a key is typed
-                    if (event.which === 13) {
+            
+                    if (event.which === 13 && username==null) {
                         // When the client hits ENTER on their keyboard
-                        if (username) {
-                            sendMessage();
-                            socket.emit('stop typing');
-                            typing = false;
-                        } 
-                        else {
                             setUsername();
-                        }
                     }
                 });
+                
+               $inputMessage.keydown(function (event) {
+                    // Auto-focus the current input when a key is typed
+                    if (username) {
+                        sendMessage();
+                        typing = false;
+                    } 
+                    if (event.which === 13 ) {
+                        // Use it to clear the text box later on 
+                        console.log("time to clear the chat box")
+                        //setUsername();
+                    }   
+                });
+                
+                
+              function sendMessage () {
+                  var message = $inputMessage.val();
+                  // if there is a non-empty message and a socket connection
+                  //console.log(message)
+                  console.log(connected)
+                  if (message && connected) {
+                      //$inputMessage.val('');
+                      // tell server to execute 'new message' and send along one parameter
+                      console.log(message);
+                      socket.emit('new message', message);
+                    }
+            }
+
             });
             
             
