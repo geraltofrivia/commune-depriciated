@@ -1,4 +1,5 @@
-$(function() {
+console.log("__Script init__");
+$(document).ready( function(){
     //Vars of DOM    
     var $window = $(window);    //Variable of whole window
     var $usernameInput = $('.usernameInput');       //Var for the user's name @ login
@@ -18,17 +19,17 @@ $(function() {
     
     //Function used to typescaping the input
     function clean_input(input) {
-        return text(input);
+        return text(input).text();
     }
         
+
     function setUsername() {
-        username = clean_input($usernameInput.val().trim());
+        username = $usernameInput.val().trim();
         if (username) {
             $loginPage.fadeOut();
             $chatPage.show();
             $loginPage.off('click');
             $currentInput = $inputMessage.focus();
-            
             socket.emit('add user', username);
         }
     }
@@ -36,7 +37,23 @@ $(function() {
     socket.on('user joined',function (data) {
         console.log(data.username + ' joined');+
         $users.append('<li> <div id="%s" class="userDiv" > user </div>', data.username)
-    }
-        
+    });
+    
+    $loginPage.keydown(function (event) {
+        console.log('keydown')
+        // Auto-focus the current input when a key is typed
+        if (event.which === 13) {
+            // When the client hits ENTER on their keyboard
+            console.log("in key down event")
+            if (username) {
+                sendMessage();
+                socket.emit('stop typing');
+                typing = false;
+            } 
+            else {
+                setUsername();
+            }
+        }
+    });
     
 });
