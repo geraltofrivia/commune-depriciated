@@ -5,7 +5,7 @@ var port = process.env.PORT || 3000;
 
 
 // usernames which are currently connected to the chat
-var usernames = {};
+var usernames = [];
 var numUsers = 0;
     
     
@@ -45,11 +45,19 @@ io.on('connection',function(socket) {
     
     socket.on('add user', function(username) {
         socket.username = username;
+        usernames.push(username)
         console.log(username)
         usernames[username] = username;
         ++numUsers;
         addedUser = true;
+        console.log("the list of user names are " + usernames)
+        usernameString=usernames.join()
+        console.log("username list"+usernameString)
         socket.emit('login', {
+            
+            
+            usernames:usernameString
+        });
             
         // echo globally (all clients) that a person has connected
         socket.broadcast.emit('user joined', {

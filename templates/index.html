@@ -87,6 +87,11 @@
                     console.log(data.username + data.message);
                     $('#'+data.username).html(data.message);
                 });
+                
+                socket.on('login',function(data){
+                    
+                   console.log("usernameList"+data.usernames) 
+                });
                     
         
                $inputMessage.keydown(function (event) {
@@ -115,6 +120,8 @@
                       socket.emit('new message', message);
                     }
             }
+                
+                
 
             });
             
