@@ -3,11 +3,12 @@
 	<head>
         <meta charset="UTF-8">
 		<title> Socket.IO chat</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="client.css">
+        <link rel="import" href="/templates/post-card.html">
 	</head>
     
     <body>
-        <div class="chatpage">
+        <div class="chat page">
             <div class="chatArea">
                 <div class="users"></div>
             </div>
@@ -15,12 +16,12 @@
             <br>
             <input class="inputMessage" placeholder="Type here..."/>
         </div>
-        <div class="login">
+        <div class="login page">
             <h3 class="title"> What's your nickname? </h3>
             <input class="usernameInput" type="text" maxlength="14" />
         </div>
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-        <script src="/templates/client.js" ></script>
+        <script src="client.js" ></script>
     </body>
 </html>

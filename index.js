@@ -12,11 +12,8 @@ var numUsers = 0;
 app.get('/', function(req, res){ 
     res.sendFile(__dirname+'/templates/index.html');
 });
-/*app.get('/templates/client.js',function(req, res) {
-    res.sendFile(__dirname+'/templates/client.js');
-});*/
 app.get(/^(.*)$/, function(req, res, next){
-res.send(req.params[0]);
+    res.sendFile(__dirname+'/templates/'+req.params[0]);
 });
 app.get('/templates/client.css',function(req, res) {
     res.sendFile(__dirname+'/templates/client.css');

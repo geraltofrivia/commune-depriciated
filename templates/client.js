@@ -4,8 +4,8 @@
      var $usernameInput = $('.usernameInput');       //Var for the user's name @ login
      var $users = $('.users');        //Var for the list of users's div
      var $inputMessage = $('.inputMessage');     //Var for the user's input
-     var $loginPage = $('.login');       //Var for the whole login page
-     var $chatPage = $('.chatpage');     //Var for the actual chat area
+     var $loginPage = $('.login.page');       //Var for the whole login page
+     var $chatPage = $('.chat.page');     //Var for the actual chat area
 
      //Vars for misc manipulation
      var username;
@@ -73,9 +73,6 @@
             console.log(append_command)
             $users.append(append_command)
          }
-
-         
-         
      });
 
 
