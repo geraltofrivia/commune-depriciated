@@ -10,17 +10,12 @@ var numUsers = 0;
     
 //Routing
 app.get('/', function(req, res){ 
-    res.sendFile(__dirname+'/templates/index.html');
+    res.sendFile(__dirname+'/client/index.html');
 });
 app.get(/^(.*)$/, function(req, res, next){
-    res.sendFile(__dirname+'/templates/'+req.params[0]);
+    res.sendFile(__dirname+req.params[0]);
 });
-app.get('/templates/client.css',function(req, res) {
-    res.sendFile(__dirname+'/templates/client.css');
-});
-app.get('/:id',function(req, res) {
-    console.log(id);
-});
+
 
 
 io.on('connection',function(socket) {
