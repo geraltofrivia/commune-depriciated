@@ -8,13 +8,23 @@ var port = process.env.PORT || 3000;
 var usernames = [];
 var numUsers = 0;
     
-    
+//Routing
 app.get('/', function(req, res){ 
     res.sendFile(__dirname+'/templates/index.html');
 });
-app.get('/templates/client.js',function(req, res) {
+/*app.get('/templates/client.js',function(req, res) {
     res.sendFile(__dirname+'/templates/client.js');
+});*/
+app.get('/test_routing',function(req, res) {
+    console.log("Test routing");
 });
+app.get('/templates/client.css',function(req, res) {
+    res.sendFile(__dirname+'/templates/client.css');
+});
+app.get('/:id',function(req, res) {
+    console.log(id);
+});
+
 
 io.on('connection',function(socket) {
     var addedUser = false;
