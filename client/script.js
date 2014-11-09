@@ -57,11 +57,11 @@
          $('#'+data.username).remove();
      });
 
-
+     
      //User msg management
      socket.on('new message',function (data) {
          console.log(data.username + data.message);
-         $('#'+data.username+'.message').html(data.message);
+         $('#'+data.username+' .message').data(data.message);
      });
 
      socket.on('login',function(data){
@@ -93,12 +93,9 @@
 
      function sendMessage (message) {
          // if there is a non-empty message and a socket connection
-         //console.log(message)
-         console.log(connected)
          if (message && connected) {
              //$inputMessage.val('');
              // tell server to execute 'new message' and send along one parameter
-             console.log(message);
              socket.emit('new message', message);
          }
      }
