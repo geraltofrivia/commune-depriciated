@@ -25,7 +25,7 @@
     function setUsername() {
         username = $usernameInput.val().trim();
         if (username) {
-            $loginPage.fadeOut();
+            $loginPage.slideUp(500);
             $chatPage.show();
             $loginPage.off('click');
             $currentInput = $inputMessage.focus();
@@ -48,40 +48,51 @@
      //User div management
      socket.on('user joined',function (data) {
          console.log(data.username + ' joined');
-         append_command = "<user-card id='"+data.username+"' > <h2>"+data.username+"</h2> </user-card>";
-         console.log(append_command)
-         $users.append(append_command)
+         createUserCard(data.username)
+         $('#'+data.username+' .user-name').html(data.username);
      });
      socket.on('user left',function (data) {
          console.log(data.username + 'left');
          $('#'+data.username).remove();
      });
 
+     function createUserCard(id) {
+        if ('content' in document.createElement('template')) {
+            var template = document.querySelector('#user-Element').content;
+            template.querySelector('.user-card').id=id;
+            var clone = document.importNode(template, true);
+            var users = document.querySelector('.users');
+            console.log(clone)
+            users.appendChild(clone);
+        }
+     }
+ 
      
      //User msg management
      socket.on('new message',function (data) {
          console.log(data.username + data.message);
-         $('#'+data.username+' .message').data(data.message);
+         $('#'+data.username+' .message-box').html(data.message);
      });
 
      socket.on('login',function(data){
          console.log("usernameList"+data.usernames)
          var userList=data.usernames.split(",")
-         for (var i=0;i<userList.length;i++)
-         {
-            append_command = "<user-card id='"+userList[i]+"'> <h2>"+userList[i]+"</h2> </user-card";
-            console.log(append_command)
-            $users.append(append_command)
+         for (var i=0;i<userList.length;i++) {
+             createUserCard(userList[i]);
+             $('#'+userList[i]+' .user-name').html(userList[i]);
          }
      });
 
 
-     $inputMessage.keydown(function (event) {
+     $inputMessage.keyup(function (event) {
          // Auto-focus the current input when a key is typed
          if (username) {
              var message = $inputMessage.val();
-             $('#'+username).html(message)
-             sendMessage(message);
+             console.log(message)
+             $('#'+username +' .message-box').html(message)
+             if (message && connected) {
+                 socket.emit('new message', message);
+             }
              typing = false;
          } 
          if (event.which === 13 ) {
@@ -90,14 +101,5 @@
          }   
      });
 
-
-     function sendMessage (message) {
-         // if there is a non-empty message and a socket connection
-         if (message && connected) {
-             //$inputMessage.val('');
-             // tell server to execute 'new message' and send along one parameter
-             socket.emit('new message', message);
-         }
-     }
 });
 

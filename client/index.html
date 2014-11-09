@@ -3,8 +3,6 @@
 	<head>
         <meta charset="UTF-8">
 		<title> Socket.IO chat</title>
-        <script src="/polymer/components/platform/platform.js"></script>
-        <link rel="import" href="/polymer/components/font-roboto/roboto.html">
         <link rel="stylesheet" href="/client/style.css">
         <link rel="import" href="/client/user-card.html">
 	</head>
@@ -12,23 +10,27 @@
     <body unresolved>
         <div class="chat page">
             <div class="chatArea">
-                <div class="users">
-                    <user-card>
-                        <h2>Default user</h2>
-                        <p>I'm composing with shadow DOM!</p>
-                    </user-card>
-                </div>
+                <div class="users"></div>
             </div>
             <br>
             <br>
             <input class="inputMessage" placeholder="Type here..."/>
         </div>
         <div class="login page">
-            <h3 class="title"> What's your nickname? </h3>
+            <h3 class="title"> ENTER_YOUR_NICKNAME </h3>
             <input class="usernameInput" type="text" maxlength="14" />
         </div>
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <script src="/client/script.js" ></script>
+        
+        <template id="user-Element">
+            <div class="user-card" id="">
+                <div class="user-name"> </div>
+                <div class="message-box"> </div>
+            </div>
+        </template>
+        
+        
     </body>
 </html>
