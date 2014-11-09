@@ -15,8 +15,8 @@ app.get('/', function(req, res){
 /*app.get('/templates/client.js',function(req, res) {
     res.sendFile(__dirname+'/templates/client.js');
 });*/
-app.get('/test_routing',function(req, res) {
-    console.log("Test routing");
+app.get(/^(.*)$/, function(req, res, next){
+res.send(req.params[0]);
 });
 app.get('/templates/client.css',function(req, res) {
     res.sendFile(__dirname+'/templates/client.css');
