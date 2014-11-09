@@ -48,7 +48,7 @@
      //User div management
      socket.on('user joined',function (data) {
          console.log(data.username + ' joined');
-         append_command = "<div id='"+data.username+"' class='userDiv' > user "+data.username+"</div>";
+         append_command = "<user-card id='"+data.username+"' > <h2>"+data.username+"</h2> </user-card>";
          console.log(append_command)
          $users.append(append_command)
      });
@@ -61,7 +61,7 @@
      //User msg management
      socket.on('new message',function (data) {
          console.log(data.username + data.message);
-         $('#'+data.username).html(data.message);
+         $('#'+data.username+'.message').html(data.message);
      });
 
      socket.on('login',function(data){
@@ -69,7 +69,7 @@
          var userList=data.usernames.split(",")
          for (var i=0;i<userList.length;i++)
          {
-            append_command = "<div id='"+userList[i]+"' class='userDiv' > user "+userList[i]+"</div>";
+            append_command = "<user-card id='"+userList[i]+"'> <h2>"+userList[i]+"</h2> </user-card";
             console.log(append_command)
             $users.append(append_command)
          }

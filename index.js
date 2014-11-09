@@ -36,7 +36,7 @@ io.on('connection',function(socket) {
         //Somehow remove the user from the list
         console.log('a user disconnected');
         if (addedUser) {
-            delete usernames[socket.username];
+            usernames.splice(usernames.indexOf(socket.username),1);
             --numUsers;
 
             // echo globally that this client has left
