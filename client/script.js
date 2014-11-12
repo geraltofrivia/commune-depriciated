@@ -89,14 +89,20 @@
          if (username) {
              var message = $inputMessage.val();
              console.log(message)
+             if (event.which === 13 ) {
+                $('#'+username +' .message-box').html(' ');
+                $inputMessage.val(' ');
+                console.log("time to clear the chat box");
+                message = ' ';
+             }
              $('#'+username +' .message-box').html(message)
              if (message && connected) {
                  socket.emit('new message', message);
              }
-             typing = false;
          } 
          if (event.which === 13 ) {
-             // Use it to clear the text box later on 
+             $('#'+username +' .message-box').html(' ');
+             $inputMessage.val(' ');
              console.log("time to clear the chat box")
          }   
      });

@@ -95,7 +95,7 @@ body {
 
 /*All about login page*/
 .login {
-    background: #0A539C;
+    background: #000;
     background: linear-gradient(top, #4293d6 0%,#001e96 100%);
     overflow: hidden;
 }
@@ -116,7 +116,7 @@ body {
 }
 
 .login.page .title   {
-    color: #black;
+    color: #fff;
     letter-spacing: 15px;
     margin-left: 15%;
     margin-right: 15%;
@@ -140,5 +140,17 @@ body {
 .inputMessage {
     left: 0;
     bottom: 0;
+}
 
+.message-box {
+    font-family: "Roboto";
+    font-size: 20px;
+}
+
+.user-card {
+    font-family: "Roboto";
+    font-size: 400%;
+    letter-spacing: -0.5px;
+    font-weight: bold;
+    font-style: normal;
 }
