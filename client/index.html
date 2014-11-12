@@ -5,32 +5,67 @@
 		<title> Socket.IO chat</title>
         <link rel="stylesheet" href="/client/style.css">
         <link rel="import" href="/client/user-card.html">
+        <link type="text/css" rel="stylesheet" href="/client/css/materialize.css"  media="screen,projection"/>
+        <style> 
+            .title{
+                text-align: center;
+                color: #fff;
+                margin-left: 15%;
+                margin-right: 15%;
+                margin-top: 15%;
+                margin-bottom: 15%;
+                font-size: 600%;
+            }
+            
+            .user-name{
+                /*font-size: 150%;*/
+                font-weight: 100;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            }
+            
+            .message-box {
+                /*box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);*/
+                height: auto;
+                min-height: 30px;
+                max-height: 90px;
+                word-wrap: break-word;
+            }
+        </style>
 	</head>
-    
     <body unresolved>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="/FlowType.JS/flowtype.js"></script>
         <div class="chat page">
-            <div class="chatArea">
+            <div class="chatArea row">
                 <div class="users"></div>
             </div>
             <br>
             <br>
             <input class="inputMessage" placeholder="Type here..."/>
         </div>
-        <div class="login page">
-            <h3 class="title"> ENTER_YOUR_NICKNAME </h3>
-            <input class="usernameInput" type="text" maxlength="14" />
+        <div class="login page"> 
+            
+            <input class="usernameInput flow-text" type="text" placeholder="ENTER_YOUR_NICKNAME" ></input>
         </div>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-        <script src="/client/script.js" ></script>
         
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/client/js/materialize.js"></script>
+        <script src="/client/script.js" ></script>
+        <script type="text/javascript">  
+            $('user-name').flowtype({
+             minimum   : 480,
+             maximum   : 1200,
+             minFont   : 15,
+             maxFont   : 50,
+            });  
+        </script>
         <template id="user-Element">
-            <div class="user-card" id="">
-                <div class="user-name"> </div>
-                <div class="message-box"> </div>
+            <div class="col s12 m6"> 
+                <div class="card cyan" id="">
+                    <div class="user-name card-content"> </div>
+                    <div class="message-box card-footer"> </div>
+                </div>
             </div>
         </template>
-        
-        
     </body>
 </html>

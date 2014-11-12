@@ -21,7 +21,10 @@
          return text(input).text();
      }
 
-
+     
+    //Animation
+     $usernameInput.val("")
+     
     function setUsername() {
         username = $usernameInput.val().trim();
         if (username) {
@@ -50,6 +53,7 @@
          console.log(data.username + ' joined');
          createUserCard(data.username)
          $('#'+data.username+' .user-name').html(data.username);
+         toast('User ' + data.username+ ' Joined!', 3000);
      });
      socket.on('user left',function (data) {
          console.log(data.username + 'left');
@@ -59,12 +63,14 @@
      function createUserCard(id) {
         if ('content' in document.createElement('template')) {
             var template = document.querySelector('#user-Element').content;
-            template.querySelector('.user-card').id=id;
+            template.querySelector('.card').id=id;
             var clone = document.importNode(template, true);
             var users = document.querySelector('.users');
             console.log(clone)
             users.appendChild(clone);
         }
+         
+         
      }
  
      
@@ -101,7 +107,7 @@
              }
          } 
          if (event.which === 13 ) {
-             $('#'+username +' .message-box').html(' ');
+             $('#'+username +' .message-box').html('<br>');
              $inputMessage.val(' ');
              console.log("time to clear the chat box")
          }   

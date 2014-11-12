@@ -13,6 +13,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname+'/client/index.html');
 });
 app.get(/^(.*)$/, function(req, res, next){
+    console.log("Server asked for:" + req.params[0]);
     res.sendFile(__dirname+req.params[0]);
 });
 

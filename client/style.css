@@ -11,39 +11,6 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: url('/webfonts/Roboto-Bold-webfont.eot');
-    src: url('/webfonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/webfonts/Roboto-Bold-webfont.woff') format('woff'),
-         url('/webfonts/Roboto-Bold-webfont.ttf') format('truetype'),
-         url('/webfonts/Roboto-Bold-webfont.svg#RobotoBold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Roboto';
-    src: url('/webfonts/Roboto-Thin-webfont.eot');
-    src: url('/webfonts/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/webfonts/Roboto-Thin-webfont.woff') format('woff'),
-         url('/webfonts/Roboto-Thin-webfont.ttf') format('truetype'),
-         url('/webfonts/Roboto-Thin-webfont.svg#RobotoThin') format('svg');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Roboto';
-    src: url('/webfonts/Roboto-ThinItalic-webfont.eot');
-    src: url('/webfonts/Roboto-ThinItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/webfonts/Roboto-ThinItalic-webfont.woff') format('woff'),
-         url('/webfonts/Roboto-ThinItalic-webfont.ttf') format('truetype'),
-         url('/webfonts/Roboto-ThinItalic-webfont.svg#RobotoThinItalic') format('svg'); 
-    font-weight: 200;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Roboto';
     src: url('/webfonts/Roboto-Light-webfont.eot');
     src: url('/webfonts/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
          url('/webfonts/Roboto-Light-webfont.woff') format('woff'),
@@ -86,6 +53,7 @@ body {
     padding: 0;
 }
 
+
 .page {
     height: 100%;
     position: absolute;
@@ -100,7 +68,30 @@ body {
     overflow: hidden;
 }
 
-.login.page .usernameInput, .inputMessage{
+.login.page .usernameInput {
+    font-size: 400%;
+    font-weight: 200;
+    letter-spacing: -0.5px;
+    font-family: "Roboto";
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    height: 60px;
+    /*border: 10px solid #3f51b5;*/
+    border-collapse: collapse;    
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    top: 40%;
+    /*padding-left: 40%;*/
+    color: #0398DB;
+    text-align: center;
+}
+
+
+
+/*All about our chat page*/
+.inputMessage {
     font-size: 200%;
     letter-spacing: -0.5px;
     font-family: "Courier New";
@@ -108,38 +99,12 @@ body {
     width: 100%;
     position: absolute;
     height: 60px;
-    border: 10px solid #3f51b5;
+    /*border: 10px solid #3f51b5;*/
     border-collapse: collapse;    
     bottom: 0px;
     left: 0;
     right: 0;
-}
 
-.login.page .title   {
-    color: #fff;
-    letter-spacing: 15px;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 15%;
-    margin-bottom: 15%;
-    font-family: "Roboto";
-    font-size: 500%;
-}
-
-.login.page .title:before, .login.page .title:after {
-    content: attr(title);
-    padding: 50px;
-    color: rgba(255,255,255,.9);
-    position: absolute;
-}
-
-.login.page .title:before { top: 20px; left: 20px }
-.login.page .title:after  { top: 40px; left: 40px }
-
-/*All about our chat page*/
-.inputMessage {
-    left: 0;
-    bottom: 0;
 }
 
 .message-box {
